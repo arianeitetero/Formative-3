@@ -1,3 +1,86 @@
+# 📊 Formative 3: Part 1 — Gaussian Mixture Models & EM Algorithm Implementation
+
+This repository contains the complete implementation and technical documentation for **Part 1** of Formative 3 (*Mathematics for Machine Learning*). 
+
+Part 1 focuses on probabilistic modeling of unlabeled human height distributions using a custom-built **Expectation-Maximization (EM) Algorithm** implemented entirely from scratch in Python.
+
+---
+
+## 🎯 Objective & Overview
+
+We are given an unlabeled dataset combining two distinct human height populations: **Children** and **Basketball Players / Adults** (derived from Galton’s family height records, $N = 1,868$). 
+
+Because the data lacks explicit identity labels, we treat it as an **unlabeled mixture of two Gaussian (bell-curve) distributions**:
+1. **Cluster 1 ($\mu_1 \approx 64.81''$):** Shorter cohort (Children)
+2. **Cluster 2 ($\mu_2 \approx 69.59''$):** Taller cohort (Basketball Players / Adults)
+
+---
+
+## 💡 Core Conceptual Question: Why Not Split at the Global Mean?
+
+> **Question:** *Should you or should you not simply draw a line at the dataset's global mean ($\approx 67.97''$) to split the data into two piles and calculate the mean of each pile?*
+
+### ❌ Answer: **NO, you should NOT split at the global mean.**
+
+### **Key Justifications:**
+1. **Distribution Overlap:** Human height distributions naturally overlap. A height near $67''$–$68''$ could belong to either a tall child or a shorter adult. A hard cutoff forces arbitrary binary decisions on inherently ambiguous data points.
+2. **Metric Distortion:** Forcing a hard split clips the natural tails of both Gaussian curves. This artificially reduces the calculated variance ($\sigma^2$) and biases the true group means ($\mu$).
+3. **The Soft Assignment Solution:** The EM algorithm uses **soft assignments** (posterior probabilities via Bayes' Rule between $0$ and $1$). Points near the middle contribute proportionally to updating both distributions rather than being forced into a single pile.
+
+---
+
+## 🧮 Mathematical Mechanics & Implementation Details
+
+All functions were implemented **from scratch** using basic Python and NumPy (without machine learning libraries like `scikit-learn`):
+
+1. **Gaussian Probability Density Function (PDF):**
+   $$P(x \mid \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)$$
+
+2. **Expectation Step (E-Step):** Calculates soft responsibilities ($r_{ik}$) using Bayes' Rule:
+   $$r_{ik} = \frac{\pi_k \cdot \mathcal{N}(x_i \mid \mu_k, \sigma_k^2)}{\sum_{j=1}^{2} \pi_j \cdot \mathcal{N}(x_i \mid \mu_j, \sigma_j^2)}$$
+
+3. **Maximization Step (M-Step):** Updates cluster parameters using weighted responsibilities:
+   $$N_k = \sum_{i=1}^N r_{ik}, \quad \mu_k = \frac{\sum_{i=1}^N r_{ik} x_i}{N_k}, \quad \sigma_k^2 = \frac{\sum_{i=1}^N r_{ik} (x_i - \mu_k)^2}{N_k}, \quad \pi_k = \frac{N_k}{N}$$
+
+4. **Log-Likelihood Evaluation:** Tracks total optimization fit until convergence:
+   $$\log L(\theta) = \sum_{i=1}^{N} \log \left( \sum_{k=1}^{2} \pi_k \cdot \mathcal{N}(x_i \mid \mu_k, \sigma_k^2) \right)$$
+
+---
+
+## 📈 Optimization Tracking Table
+
+Below is the required optimization tracking table produced by our implementation, displaying parameter updates from initialization through early iterations to full convergence:
+
+| Iteration | $\mu_1$ (Child) | $\mu_2$ (Pro/Adult) | $\sigma_1^2$ | $\sigma_2^2$ | $\pi_1$ | $\pi_2$ | Log-Likelihood |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **0 (Init)** | $56.0000$ | $79.0000$ | $10.9639$ | $10.9639$ | $0.5000$ | $0.5000$ | $-11945.2214$ |
+| **1** | $64.8279$ | $70.1720$ | $4.6370$ | $3.6331$ | $0.4118$ | $0.5882$ | $-4894.5713$ |
+| **2** | $64.9195$ | $70.0463$ | $5.3587$ | $4.1372$ | $0.4047$ | $0.5953$ | $-4875.3084$ |
+| **Final (50)** | **$64.8114$** | **$69.5867$** | **$6.4699$** | **$5.5479$** | **$0.3382$** | **$0.6618$** | **$-4861.8828$** |
+
+*Note: The rapid jump in log-likelihood from $-11,945.22$ to $-4,894.57$ on Iteration 1 demonstrates rapid algorithm convergence toward optimal distribution parameters.*
+
+---
+
+## 🔮 Live Bayes' Rule Prediction Engine
+
+Our implementation includes an interactive prediction function (`predict`) that evaluates any test height and outputs posterior probabilities:
+
+```python
+def predict(height, mu1, mu2, sigma1, sigma2, pi1, pi2):
+    p1 = pi1 * gaussian(height, mu1, sigma1)
+    p2 = pi2 * gaussian(height, mu2, sigma2)
+    total = p1 + p2
+
+    p_child = p1 / total
+    p_pro = p2 / total
+
+    verdict = "Child" if p_child > p_pro else "Basketball Player / Pro"
+    return {"Child Probability": p_child, "Pro Probability": p_pro, "Classification": verdict}
+
+
+
+
 # Part 2: Bayes' Theorem on IMDb Reviews
 
 ## What we did
