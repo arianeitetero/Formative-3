@@ -77,7 +77,7 @@ def predict(height, mu1, mu2, sigma1, sigma2, pi1, pi2):
 
     verdict = "Child" if p_child > p_pro else "Basketball Player / Pro"
     return {"Child Probability": p_child, "Pro Probability": p_pro, "Classification": verdict}
-
+```
 
 
 
