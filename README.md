@@ -131,3 +131,20 @@ A review counts as containing a word if the word appears in it at least once. Re
 
 ## Files
 - `part2_bayesian_probability.ipynb(1)`: the code, results and chart for Part 2
+
+
+## Parts 3 and 4: Gradient Descent
+
+### Part 3 — Manual Calculation
+Part 3 shows the gradient descent process worked out by hand for the given linear model, input data, initial weights, and bias. It calculates the predictions, Mean Squared Error (MSE), gradients, and three parameter updates, showing the intermediate values after each update.
+
+### Part 4 — Python Implementation
+Part 4 implements the same process in a Jupyter Notebook using NumPy for matrix calculations, SciPy to approximate derivatives, and Matplotlib to plot the results. The notebook updates the parameters over multiple iterations, calculates the final predictions, and produces separate plots for parameter changes and MSE.
+
+### Observations
+- The initial predictions are **[6, 17]**, compared with target values **[5, 6]**, giving an initial MSE of **61**.
+- The MSE decreases as gradient descent updates the parameters, showing that the predictions generally move closer to the target values.
+- The weights and bias change at each iteration as the algorithm follows the gradients to reduce the error.
+- The parameter plot shows how the weights and bias change over time, while the error plot shows the reduction in MSE.
+
+**Files:** `Part 3 Gradient Descent Calculation.pdf` contains the manual work, and `Part_4_Gradient_Descent.ipynb` contains the Python implementation and plots.
