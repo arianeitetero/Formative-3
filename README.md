@@ -1,4 +1,4 @@
-# 📊 Formative 3: Part 1 — Gaussian Mixture Models & EM Algorithm Implementation
+#  Formative 3: Part 1 — Gaussian Mixture Models & EM Algorithm Implementation
 
 This repository contains the complete implementation and technical documentation for **Part 1** of Formative 3 (*Mathematics for Machine Learning*). 
 
@@ -6,7 +6,7 @@ Part 1 focuses on probabilistic modeling of unlabeled human height distributions
 
 ---
 
-## 🎯 Objective & Overview
+##  Objective & Overview
 
 We are given an unlabeled dataset combining two distinct human height populations: **Children** and **Basketball Players / Adults** (derived from Galton’s family height records, $N = 1,868$). 
 
@@ -16,11 +16,11 @@ Because the data lacks explicit identity labels, we treat it as an **unlabeled m
 
 ---
 
-## 💡 Core Conceptual Question: Why Not Split at the Global Mean?
+##  Core Conceptual Question: Why Not Split at the Global Mean?
 
 > **Question:** *Should you or should you not simply draw a line at the dataset's global mean ($\approx 67.97''$) to split the data into two piles and calculate the mean of each pile?*
 
-### ❌ Answer: **NO, you should NOT split at the global mean.**
+###  Answer: **NO, you should NOT split at the global mean.**
 
 ### **Key Justifications:**
 1. **Distribution Overlap:** Human height distributions naturally overlap. A height near $67''$–$68''$ could belong to either a tall child or a shorter adult. A hard cutoff forces arbitrary binary decisions on inherently ambiguous data points.
@@ -29,7 +29,7 @@ Because the data lacks explicit identity labels, we treat it as an **unlabeled m
 
 ---
 
-## 🧮 Mathematical Mechanics & Implementation Details
+##  Mathematical Mechanics & Implementation Details
 
 All functions were implemented **from scratch** using basic Python and NumPy (without machine learning libraries like `scikit-learn`):
 
@@ -47,7 +47,7 @@ All functions were implemented **from scratch** using basic Python and NumPy (wi
 
 ---
 
-## 📈 Optimization Tracking Table
+##  Optimization Tracking Table
 
 Below is the required optimization tracking table produced by our implementation, displaying parameter updates from initialization through early iterations to full convergence:
 
@@ -62,7 +62,7 @@ Below is the required optimization tracking table produced by our implementation
 
 ---
 
-## 🔮 Live Bayes' Rule Prediction Engine
+##  Live Bayes' Rule Prediction Engine
 
 Our implementation includes an interactive prediction function (`predict`) that evaluates any test height and outputs posterior probabilities:
 
@@ -102,7 +102,29 @@ A review counts as containing a word if the word appears in it at least once. Re
 - Positive: excellent, wonderful, masterpiece, brilliant
 - Negative: worst, awful, boring, waste
 
-(Add your group's reason for choosing each word here.)
+Selected Positive and Negative Words
+
+We selected 4 positive words and 4 negative words based on how strongly they indicate whether a reviewer liked or disliked a film. We avoided general words such as “good” and “great” because they can also appear in negative phrases such as “not good” or “not great.”
+
+Positive Words
+
+Excellent: Often used to praise the acting, story, or overall film. 81% of reviews containing this word are positive.
+
+Wonderful: Usually used when a reviewer enjoyed the film. 81% of reviews containing this word are positive.
+
+Masterpiece: A strong expression of praise, describing a film as exceptionally good. Although it is less common, 73% of reviews containing this word are positive.
+
+Brilliant: Used to describe impressive acting, writing, ideas, or the film as a whole. 76% of reviews containing this word are positive.
+
+Negative Words
+
+Worst: Used to strongly express dislike, such as in “the worst movie.” Only 9% of reviews containing this word are positive.
+
+Awful: Used to describe very poor acting, storytelling, or an overall bad film. Only 10% of reviews containing this word are positive.
+
+Boring: A common complaint used when a film is not interesting or engaging. 19% of reviews containing this word are positive. This is the highest percentage among our negative words because phrases such as “not boring” can appear in positive reviews.
+
+Waste: Commonly appears in phrases such as “waste of time” or “waste of money” to express dissatisfaction. Only 7% of reviews containing this word are positive.
 
 ## Results
 
